@@ -9,6 +9,6 @@ void print_menu()
 	int i;
 
 	for(i=0;i<NUM_OPCOES;i++)
-		printf("%d) %s\n",i,opcoes_menu[i]);
+		printf("%d) %s\n",i+1,opcoes_menu[i]);
 }
 

@@ -15,7 +15,7 @@
 all:	main.x
 	./main.x
 
-main.x:	main.c utils.c
+main.x:	main.c utils.c sistema.c
 	gcc $^ -o $@ -g
 
 clean:
