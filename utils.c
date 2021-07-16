@@ -1,7 +1,7 @@
 #include "utils.h"
 #include <stdio.h>
 
-static char opcoes_menu[NUM_OPCOES][11]={"Inserir","Editar","Excluir","Visualizar","Sair"};
+static char opcoes_menu[NUM_OPCOES][21]={"Inserir registro","Editar registro","Excluir registro","Visualizar registro","Sair"};
 
 void print_menu()
 /*< Função para imprimir o menu do sistema >*/
