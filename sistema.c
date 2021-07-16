@@ -47,6 +47,7 @@ void visualizar_registros(){
 	int i;
 	int num_usuarios;
 	char buffer[30];
+	int id, opcao;
 
 	fp = fopen(BANCO_DE_DADOS,"r");
 	if(fp==NULL){
@@ -56,9 +57,25 @@ void visualizar_registros(){
 
 	num_usuarios=conta_linhas(fp);
 
-	for(i=0;i<num_usuarios;i++){
-		fscanf(fp,"%[^\n]%*c",buffer);
-		printf("id=%d nome=%s\n",i,buffer);
+	printf("1 - Visualizar por id\n2 - Visualizar todos os usuários\n");
+	scanf(" %d",&opcao);
+	if(opcao==2){
+		printf("Lista de usuários\n");
+		for(i=0;i<num_usuarios;i++){
+			fscanf(fp,"%[^\n]%*c",buffer);
+			printf("id=%d nome=%s\n",i,buffer);
+		}
+	}else if(opcao==1){
+		printf("Qual o id? ");
+		scanf(" %d",&id);
+		if(id>=num_usuarios || id < 0){
+			printf("Não há nenhum usuário cadastrado com o id=%d\n",id);
+			return;
+		}
+		/* TODO */
+		printf("TODO\n");
+	}else{
+		printf("Opção inválida! (y/n)?\n");
 	}
 
 	fclose(fp);
