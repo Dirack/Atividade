@@ -6,4 +6,6 @@
 
 void inserir_registros();
 
+void visualizar_registros();
+
 #endif

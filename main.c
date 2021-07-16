@@ -15,7 +15,7 @@ int main(void){
 			case 1:	inserir_registros(); break;
 			case 2:	printf("escolheu 2\n"); break;
 			case 3:	printf("escolheu 3\n"); break;
-			case 4:	printf("escolheu 4\n"); break;
+			case 4:	visualizar_registros(); break;
 			case 5:	printf("escolheu 5\n"); break;
 			default: printf("Opção inválida!\n");
 		}

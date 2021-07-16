@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "utils.h"
 #define MAX_NOME 30
 #define BANCO_DE_DADOS "pessoas.txt"
 
@@ -36,6 +37,28 @@ void inserir_registros(){
 	}else{
 		fprintf(stderr,"%s: Erro: Opção inválida! (y/n)?",__FILE__);
 		return;
+	}
+
+	fclose(fp);
+}
+
+void visualizar_registros(){
+	FILE *fp;
+	int i;
+	int num_usuarios;
+	char buffer[30];
+
+	fp = fopen(BANCO_DE_DADOS,"r");
+	if(fp==NULL){
+		fprintf(stderr,"%s: Falha ao abrir o arquivo %s\n",__FILE__,BANCO_DE_DADOS);
+		exit(1);
+	}
+
+	num_usuarios=conta_linhas(fp);
+
+	for(i=0;i<num_usuarios;i++){
+		fscanf(fp,"%[^\n]%*c",buffer);
+		printf("id=%d nome=%s\n",i,buffer);
 	}
 
 	fclose(fp);

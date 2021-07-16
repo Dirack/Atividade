@@ -12,3 +12,12 @@ void print_menu()
 		printf("%d) %s\n",i+1,opcoes_menu[i]);
 }
 
+int conta_linhas(FILE *fp){
+        char linha[30];
+        int count=0;
+        while(fscanf(fp,"%[^\n]%*c",linha)==1){
+                count++;
+        }
+        rewind(fp);
+        return count;
+}
