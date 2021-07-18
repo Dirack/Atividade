@@ -73,7 +73,10 @@ void visualizar_registros(){
 			return;
 		}
 		/* TODO */
-		printf("TODO\n");
+		for(i=0;i<id+1;i++){
+			fscanf(fp,"%[^\n]%*c",buffer);
+		}
+		printf("id=%d nome=%s\n",i,buffer);
 	}else{
 		printf("Opção inválida! (y/n)?\n");
 	}
