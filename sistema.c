@@ -80,3 +80,96 @@ void visualizar_registros(){
 
 	fclose(fp);
 }
+
+void excluir_registros(){
+	FILE *fp;
+	int id;
+	int num_usuarios;
+	int i;
+	char excluir='n';
+	char nome[30];
+	char usuarios[10][30];
+	fp=fopen(BANCO_DE_DADOS,"r");
+
+	num_usuarios=conta_linhas(fp);
+	printf("Forneça o id de usuário: "); scanf(" %d",&id);
+	if(id>=num_usuarios){
+		fprintf(stderr,"%s: Erro: Usuário id=%d não encontrado!\n",__FILE__,id);
+		return;
+	}else{
+		for(i=0;i<num_usuarios;i++)	
+			fscanf(fp,"%[^\n]%*c",usuarios[i]);
+		fclose(fp);
+	}
+
+	printf("O usuário a ser excluído:\n");
+	printf("Nome: %s\n",usuarios[id]);
+	printf("Excluir (y/n)? "); scanf(" %c",&excluir);
+	if(excluir=='y'){
+		fp=fopen(BANCO_DE_DADOS,"w");
+		for(i=0;i<num_usuarios;i++){
+			if(i==id) continue;
+			fprintf(fp,"%s\n",usuarios[i]);
+		}
+		fclose(fp);
+		printf("Registro excluído com sucesso!\n");
+	}else if(excluir=='n'){
+		printf("Registro ignorado!\n");
+	}else{
+		fprintf(stderr,"%s: Erro: Opção inválida! (y/n)?",__FILE__);
+		return;
+	}
+
+
+}
+
+void editar_registros(){
+	FILE *fp;
+	int id;
+	int num_usuarios;
+	int i;
+	char excluir='n';
+	char novo[30];
+	char usuarios[10][30];
+	fp=fopen(BANCO_DE_DADOS,"r");
+
+	num_usuarios=conta_linhas(fp);
+	printf("Forneça o id de usuário: "); scanf(" %d",&id);
+	if(id>=num_usuarios){
+		fprintf(stderr,"%s: Erro: Usuário id=%d não encontrado!\n",__FILE__,id);
+		return;
+	}else{
+		for(i=0;i<num_usuarios;i++)	
+			fscanf(fp,"%[^\n]%*c",usuarios[i]);
+		fclose(fp);
+	}
+
+	printf("O usuário a ser editado:\n");
+	printf("Nome: %s\n",usuarios[id]);
+	printf("Editar (y/n)? "); scanf(" %c",&excluir);
+	if(excluir=='y'){
+		fp=fopen(BANCO_DE_DADOS,"w");
+		printf("Digite o novo nome do usuário:\n");
+		scanf(" %[^\n]",novo);
+		if((strlen(novo))<=2){
+			fprintf(stderr,"%s: Erro: O nome deve possuir mais de 2 caracteres!\n",__FILE__);
+			return;
+		}
+
+		for(i=0;i<num_usuarios;i++){
+			if(i==id){
+				fprintf(fp,"%s\n",novo);
+				continue;
+			}
+			fprintf(fp,"%s\n",usuarios[i]);
+		}
+		fclose(fp);
+		printf("Registro editado com sucesso!\n");
+	}else if(excluir=='n'){
+		printf("Registro ignorado!\n");
+	}else{
+		fprintf(stderr,"%s: Erro: Opção inválida! (y/n)?",__FILE__);
+		return;
+	}
+
+}

@@ -13,10 +13,10 @@ int main(void){
 
 		switch(opcao){
 			case 1:	inserir_registros(); break;
-			case 2:	printf("escolheu 2\n"); break;
-			case 3:	printf("escolheu 3\n"); break;
+			case 2:	editar_registros(); break;
+			case 3:	excluir_registros(); break;
 			case 4:	visualizar_registros(); break;
-			case 5:	printf("escolheu 5\n"); break;
+			case 5:	printf("Encerrar\n"); break;
 			default: printf("Opção inválida!\n");
 		}
 		if(opcao==5) break;

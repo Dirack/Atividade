@@ -8,4 +8,8 @@ void inserir_registros();
 
 void visualizar_registros();
 
+void excluir_registros();
+
+void editar_registros();
+
 #endif
