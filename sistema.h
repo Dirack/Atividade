@@ -12,4 +12,6 @@ void excluir_registros();
 
 void editar_registros();
 
+void iniciar_banco_de_dados();
+
 #endif
