@@ -3,6 +3,8 @@
 #include <string.h>
 #include "utils.h"
 #define MAX_NOME 30
+#define MAX_EMAIL 30
+#define MAX_TELEFONE 12
 #define MAX_USUARIOS 100
 #define BANCO_DE_DADOS "pessoas.txt"
 
@@ -19,14 +21,30 @@ void iniciar_banco_de_dados(){
 	fclose(fp);
 }
 
-static int nome_valido(const char *nome){
-	return (strlen(nome)>=2);
+static int usuario_valido(char nome[MAX_NOME], char *email, char *telefone){
+
+	int i;
+
+	printf("%s %s %s\n",nome,email,telefone);
+	if(strlen(nome)<=2) return 0;
+
+	if(strlen(email)<10) return 0;
+
+	if(strlen(telefone)<10) return 0;
+
+	for(i=0;i<strlen(telefone);i++)
+		if(((int)telefone[i]) < 48 || ((int)telefone[i]) > 57) return 0;	
+	return 1;
 }
 
 void inserir_registros(){
 
 	char nome[MAX_NOME];
+	char email[MAX_EMAIL];
+	char telefone[MAX_TELEFONE];
 	char salvar='n';
+	char sexo='m';
+	int i;
 
 	fp = fopen(BANCO_DE_DADOS,"a");
 	if(fp==NULL){
@@ -36,15 +54,42 @@ void inserir_registros(){
 
 	printf("Inserir novo registro na Agenda\n");
 	printf("Digite o nome do usuário:\n");
-	scanf(" %[^\n]",nome);
+
+	fgets(nome,MAX_NOME,stdin); nome[strcspn(nome, "\n")] = '\0';
+	printf("Digite o email:\n");
+	fgets(email,MAX_EMAIL,stdin); email[strcspn(email, "\n")] = '\0';
+	printf("Digite o telefone:\n");
+	fgets(telefone,MAX_TELEFONE,stdin); telefone[strcspn(telefone, "\n")] = '\0';
+	printf("Escolha o Sexo do usuário (m/f)?");
+	scanf(" %c%*c",&sexo);
 	
-	if(!nome_valido(nome)){
-		fprintf(stderr,"%s: Erro: O nome deve possuir mais de 2 caracteres!\n",__FILE__);
+	if(sexo!='m' && sexo != 'f'){
+		fprintf(stderr,"%s: Erro: Opção inválida! (m/f)?",__FILE__);
 		return;
 	}
 
-	printf("O usuário a ser cadastrado:\n");
-	printf("Nome: %s\n",nome);
+	if(strlen(nome)<=2){
+		fprintf(stderr,"%s: Erro: Registro inválido!\nO nome deve possuir mais de 2 caracteres!\n",__FILE__);
+		return;
+	}else if(strlen(email)<10){
+		fprintf(stderr,"%s: Erro: Registro inválido!\nO email deve possuir mais de 10 caracteres\n",__FILE__);
+		return;
+	}else if(strlen(telefone)<10){
+		fprintf(stderr,"%s: Erro: Registro inválido!\nO telefone deve possuir de 10 a 11 caracteres\n",__FILE__);
+		return;
+	}else{
+		for(i=0;i<strlen(telefone);i++){
+			printf("%d ",telefone[i]);
+			if(((int)telefone[i])<48 || ((int) telefone[i])>57){
+				fprintf(stderr,"%s: Erro: Registro inválido!\nO telefone deve possuir apenas caracteres numéricos\n",__FILE__);
+			       	return;
+			}
+		}
+		printf("O usuário a ser cadastrado:\n");
+		printf("Nome: %s\n",nome);
+		printf("Email: %s\n",email);
+		printf("Telefone: %s\n",telefone);
+	}
 	printf("Salvar (y/n)? "); scanf(" %c",&salvar);
 
 	if(salvar=='y'){
@@ -164,7 +209,7 @@ void editar_registros(){
 		fp=fopen(BANCO_DE_DADOS,"w");
 		printf("Digite o novo nome do usuário:\n");
 		scanf(" %[^\n]",novo);
-		if(!nome_valido){
+		if(!(strlen(novo)>2)){
 			fprintf(stderr,"%s: Erro: O nome deve possuir mais de 2 caracteres!\n",__FILE__);
 			return;
 		}

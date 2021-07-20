@@ -11,7 +11,7 @@ int main(void){
 	while(1){
 		printf("Sistema de cadastro - Agenda\n");
 		print_menu();
-		scanf("%d",&opcao);
+		scanf("%d%*c",&opcao);
 
 		switch(opcao){
 			case 1:	inserir_registros(); break;
